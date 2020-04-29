@@ -33,7 +33,7 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
     private String name;
     private WebSocket webSocket;
-    private String SERVER_PATH = "ws://SERVER-IP-HERE:PORT-NUMBER-HERE";
+    private String SERVER_PATH = "ws://10.0.2.2:3000";
     private EditText messageEdit;
     private View sendBtn, pickImgBtn;
     private RecyclerView recyclerView;
@@ -190,10 +190,14 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
         if (requestCode == IMAGE_REQUEST_ID && resultCode == RESULT_OK) {
 
             try {
-                InputStream is = getContentResolver().openInputStream(data.getData());
-                Bitmap image = BitmapFactory.decodeStream(is);
+                if (data != null) {
+                    if (data.getData() != null) {
+                        InputStream is = getContentResolver().openInputStream(data.getData());
+                        Bitmap image = BitmapFactory.decodeStream(is);
 
-                sendImage(image);
+                        sendImage(image);
+                    }
+                }
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
